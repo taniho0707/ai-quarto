@@ -24,6 +24,21 @@ namespace ai_quarto
         SLWN = 15,
     }
 
+    public enum WinTypes : byte
+    {
+        COLUMN = 1,
+        ROW = 2,
+        RIGHTDOWN = 4,
+        RIGHTUP = 8,
+    }
+
+    public enum GameStatus : byte
+    {
+        CONTINUE = 0,
+        WONPLAYER1 = 1,
+        WONPLAYER2 = 2,
+    }
+
     class GameMaster
     {
         // field[x,y] = 0b00000000
@@ -38,6 +53,10 @@ namespace ai_quarto
         public bool[] used_piece = new bool[16];
 
         public byte next_piece = 0xFF;
+
+        public GameStatus gamestatus = GameStatus.CONTINUE;
+
+        public byte currentplayer = 1;
 
         public System.Drawing.Bitmap[] bitmap_resources = new System.Drawing.Bitmap[16]
         {
@@ -97,6 +116,18 @@ namespace ai_quarto
             form1.pictureBox_board_16.Image = getResource(field[3, 3]);
         }
 
+        public byte getNextPlayer(byte current)
+        {
+            if (current == 1)
+            {
+                return 2;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
         public bool putPiece(int x, int y)
         {
             if (next_piece != 0xFF && ((field[x, y] & 0x80) == 0))
@@ -115,7 +146,7 @@ namespace ai_quarto
 
         public bool setNextPiece(byte piece)
         {
-            if (used_piece[piece] || next_piece != 0xFF)
+            if (used_piece[piece] || next_piece != 0xFF || gamestatus != GameStatus.CONTINUE)
             {
                 return false;
             }
@@ -124,8 +155,134 @@ namespace ai_quarto
                 next_piece = piece;
                 used_piece[piece] = true;
                 form1.pictureBox_next.Image = bitmap_resources[piece];
+
+                currentplayer = getNextPlayer(currentplayer);
+                this.form1.label_nextplayer.Text = "Player " + currentplayer.ToString() + " のターン";
                 return true;
             }
+        }
+
+        public byte getGameEndStatus(int x, int y)
+        {
+            byte status = 0;
+
+            // column
+            byte column_status = 0xFF;
+            for (int i = 0; i < 4; i++)
+            {
+                column_status &= field[x, i];
+            }
+            if ((column_status & 0x80) > 0)
+            {
+                if ((column_status & 0x0F) > 0)
+                {
+                    status += (byte)(WinTypes.COLUMN);
+                }
+                else
+                {
+                    column_status = 0x00;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        column_status |= field[x, i];
+                    }
+                    if ((column_status & 0x0F) == 0)
+                    {
+                        status += (byte)(WinTypes.COLUMN);
+                    }
+                }
+            }
+
+            // row
+            byte row_status = 0xFF;
+            for (int i = 0; i < 4; i++)
+            {
+                row_status &= field[i, y];
+            }
+            if ((row_status & 0x80) > 0)
+            {
+                if ((row_status & 0x0F) > 0)
+                {
+                    status += (byte)(WinTypes.ROW);
+                }
+                else
+                {
+                    row_status = 0x00;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        row_status |= field[i, y];
+                    }
+                    if ((row_status & 0x0F) == 0)
+                    {
+                        status += (byte)(WinTypes.ROW);
+                    }
+                }
+            }
+
+            // rightdown
+            if (x == y)
+            {
+                byte rightdown_status = 0xFF;
+                for (int i = 0; i < 4; i++)
+                {
+                    rightdown_status &= field[i, i];
+                }
+                if ((rightdown_status & 0x80) > 0)
+                {
+                    if ((rightdown_status & 0x0F) > 0)
+                    {
+                        status += (byte)(WinTypes.RIGHTDOWN);
+                    }
+                    else
+                    {
+                        rightdown_status = 0x00;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            rightdown_status |= field[i, i];
+                        }
+                        if ((rightdown_status & 0x0F) == 0)
+                        {
+                            status += (byte)(WinTypes.RIGHTDOWN);
+                        }
+                    }
+                }
+            }
+
+            // rightup
+            if (x + y == 3)
+            {
+                byte rightup_status = 0xFF;
+                for (int i = 0; i < 4; i++)
+                {
+                    rightup_status &= field[i, 3 - i];
+                }
+                if ((rightup_status & 0x80) > 0)
+                {
+                    if ((rightup_status & 0x0F) > 0)
+                    {
+                        status += (byte)(WinTypes.RIGHTUP);
+                    }
+                    else
+                    {
+                        rightup_status = 0x00;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            rightup_status |= field[i, 3 - i];
+                        }
+                        if ((rightup_status & 0x0F) == 0)
+                        {
+                            status += (byte)(WinTypes.RIGHTUP);
+                        }
+                    }
+                }
+            }
+
+            if (status > 0)
+            {
+                gamestatus = (GameStatus)currentplayer;
+                this.form1.textBox_log.Text += "Player " + currentplayer.ToString() + " の勝利！\r\n";
+            }
+
+            return status;
         }
     }
 }

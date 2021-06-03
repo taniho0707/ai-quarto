@@ -610,7 +610,6 @@ namespace ai_quarto
         #endregion
 
         private System.Windows.Forms.Panel panel_board;
-        private System.Windows.Forms.Label label_nextplayer;
         private System.Windows.Forms.Label label_inst;
         private System.Windows.Forms.Panel panel_stock;
         private System.Windows.Forms.PictureBox pictureBox_stock_16;
@@ -629,7 +628,6 @@ namespace ai_quarto
         private System.Windows.Forms.PictureBox pictureBox_stock_3;
         private System.Windows.Forms.PictureBox pictureBox_stock_2;
         private System.Windows.Forms.PictureBox pictureBox_stock_1;
-        private System.Windows.Forms.TextBox textBox_log;
         private System.Windows.Forms.Button button_logclear;
         public System.Windows.Forms.PictureBox pictureBox_board_16;
         public System.Windows.Forms.PictureBox pictureBox_board_15;
@@ -648,6 +646,8 @@ namespace ai_quarto
         public System.Windows.Forms.PictureBox pictureBox_board_2;
         public System.Windows.Forms.PictureBox pictureBox_board_1;
         public System.Windows.Forms.PictureBox pictureBox_next;
+        public System.Windows.Forms.Label label_nextplayer;
+        public System.Windows.Forms.TextBox textBox_log;
     }
 }
 

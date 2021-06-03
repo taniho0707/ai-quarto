@@ -156,96 +156,112 @@ namespace ai_quarto
         {
             game_master.putPiece(0, 0);
             game_master.redrawFields();
+            game_master.getGameEndStatus(0, 0);
         }
 
         private void pictureBox_board_2_Click(object sender, EventArgs e)
         {
             game_master.putPiece(1, 0);
             game_master.redrawFields();
+            game_master.getGameEndStatus(1, 0);
         }
 
         private void pictureBox_board_3_Click(object sender, EventArgs e)
         {
             game_master.putPiece(2, 0);
             game_master.redrawFields();
+            game_master.getGameEndStatus(2, 0);
         }
 
         private void pictureBox_board_4_Click(object sender, EventArgs e)
         {
             game_master.putPiece(3, 0);
             game_master.redrawFields();
+            game_master.getGameEndStatus(3, 0);
         }
 
         private void pictureBox_board_5_Click(object sender, EventArgs e)
         {
             game_master.putPiece(0, 1);
             game_master.redrawFields();
+            game_master.getGameEndStatus(0, 1);
         }
 
         private void pictureBox_board_6_Click(object sender, EventArgs e)
         {
             game_master.putPiece(1, 1);
             game_master.redrawFields();
+            game_master.getGameEndStatus(1, 1);
         }
 
         private void pictureBox_board_7_Click(object sender, EventArgs e)
         {
             game_master.putPiece(2, 1);
             game_master.redrawFields();
+            game_master.getGameEndStatus(2, 1);
         }
 
         private void pictureBox_board_8_Click(object sender, EventArgs e)
         {
             game_master.putPiece(3, 1);
             game_master.redrawFields();
+            game_master.getGameEndStatus(3, 1);
         }
 
         private void pictureBox_board_9_Click(object sender, EventArgs e)
         {
             game_master.putPiece(0, 2);
             game_master.redrawFields();
+            game_master.getGameEndStatus(0, 2);
         }
 
         private void pictureBox_board_10_Click(object sender, EventArgs e)
         {
             game_master.putPiece(1, 2);
             game_master.redrawFields();
+            game_master.getGameEndStatus(1, 2);
         }
 
         private void pictureBox_board_11_Click(object sender, EventArgs e)
         {
             game_master.putPiece(2, 2);
             game_master.redrawFields();
+            game_master.getGameEndStatus(2, 2);
         }
 
         private void pictureBox_board_12_Click(object sender, EventArgs e)
         {
             game_master.putPiece(3, 2);
             game_master.redrawFields();
+            game_master.getGameEndStatus(3, 2);
         }
 
         private void pictureBox_board_13_Click(object sender, EventArgs e)
         {
             game_master.putPiece(0, 3);
             game_master.redrawFields();
+            game_master.getGameEndStatus(0, 3);
         }
 
         private void pictureBox_board_14_Click(object sender, EventArgs e)
         {
             game_master.putPiece(1, 3);
             game_master.redrawFields();
+            game_master.getGameEndStatus(1, 3);
         }
 
         private void pictureBox_board_15_Click(object sender, EventArgs e)
         {
             game_master.putPiece(2, 3);
             game_master.redrawFields();
+            game_master.getGameEndStatus(2, 3);
         }
 
         private void pictureBox_board_16_Click(object sender, EventArgs e)
         {
             game_master.putPiece(3, 3);
             game_master.redrawFields();
+            game_master.getGameEndStatus(3, 3);
         }
     }
 }
